@@ -12,16 +12,19 @@ body{
     display:flex;
     justify-content: center;
 }
-#red{
+.red{
     background-color: red;
     align-items: flex-end;
 }
-#blue{
+.blue{
     background-color: rgb(0, 115, 255);
 }
-#yellow{
+.yellow{
     background-color: rgb(218, 218, 52);
 }
-#green{
+.green{
     background-color: rgb(36, 170, 36);
+}
+.flash{
+    background-color: white;
 }
