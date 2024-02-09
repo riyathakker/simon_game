@@ -1,3 +1,15 @@
+const audioFiles = {
+    red: 'audio/red.mp3',
+    blue: 'audio/blue.mp3',
+    yellow: 'audio/yellow.mp3',
+    green: 'audio/green.mp3'
+};
+const audioElements = {};
+for (const color in audioFiles) {
+    const audio = new Audio(audioFiles[color]);
+    audioElements[color] = audio;
+}
+
 let game=[];
 let user=[];
 
@@ -24,35 +36,53 @@ function buttonflash(btn){
 }
 
 function levelincrease(){
+    user =[];
     level++;
     h2.innerText=`You are on Level ${level}`;
     //random button
     let randomindex = Math.floor(Math.random()* 3);
     let randomcolor = btns[randomindex];
     let randombutton = document.querySelector(`.${randomcolor}`);
-
     game.push(randomcolor);
     //button flash
     buttonflash(randombutton);
 
 }
-function checkans(){
-    let i = level -1;
+
+function checkans(i){
     if(user[i] === game[i]){
-        console.log("Same");
+        if(user.length == game.length){
+           setTimeout( levelincrease,500);
+        }
     }else{
-        h2.innerText = `Game over!! Press any key to start new game`;
-        console.log("Different");
+        h2.innerHTML = `Game over!! Your score is ${(level-1)*100} <br>Press any key to start new game`;
+        document.querySelector("body").style.backgroundColor ="#FF7F7F";
+        setTimeout(() => {
+            document.querySelector("body").style.backgroundColor ="white";
+        }, 1500);
+        reset();
     }
 }
-function userinput(){
-    let btn=this;
+function userinput() {
+    let btn = this;
+    let usercolor = btn.getAttribute("id");
     buttonflash(btn);
-    usercolor= btn.getAttribute("id");
     user.push(usercolor);
-    
-    checkans();
+    playAudio(usercolor); // Play corresponding audio
+    checkans(user.length - 1);
 }
+
+function playAudio(color) {
+    audioElements[color].currentTime = 0; // Reset audio to start if already playing
+    audioElements[color].play();
+}
+
 for(b of btn){
     b.addEventListener("click",userinput)
+}
+function reset(){
+    start = false;
+    game=[];
+    user=[];
+    level = 0;
 }
