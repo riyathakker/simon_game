@@ -52,7 +52,7 @@ function levelincrease(){
 function checkans(i){
     if(user[i] === game[i]){
         if(user.length == game.length){
-           setTimeout( levelincrease,500);
+           setTimeout( levelincrease,300);
         }
     }else{
         h2.innerHTML = `Game over!! Your score is ${(level-1)*100} <br>Press any key to start new game`;
